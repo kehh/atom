@@ -46,7 +46,13 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $configuration = ProjectConfiguration::getApplicationConfiguration($options['application'], $options['env'], false);
-    $sf_context = sfContext::createInstance($configuration);
+    $context = sfContext::createInstance($configuration);
+
+    // Using the current context, get the event dispatcher and suscribe an event in it
+    $context->getEventDispatcher()->connect('gearman.worker.log', function(sfEvent $event)
+      {
+        $this->logSection('gearman-worker', $event['message']);
+      });
 
     // Unset default net_gearman prefix for jobs
     define('NET_GEARMAN_JOB_CLASS_PREFIX', '');
