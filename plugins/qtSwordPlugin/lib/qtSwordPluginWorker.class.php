@@ -17,31 +17,12 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
-    How to call the worker:
-    (daemon-tools, upstart or any other tool is welcomed!)
-
-  php symfony gearman:worker \
-    --config=sword \
-    --application=qubit \
-    --connection=propel \
-    --timeout=-1 \
-    --count=0 \
-    --verbose
-*/
-
-class qtSwordPluginWorker
+class qtSwordPluginWorker extends Net_Gearman_Job_Common
 {
-  public static function depositSwordPackage($job, $worker)
+  public function run($package)
   {
-    // Notification
-    $worker->notifyEventJob($job);
-
-    // Unserialize contents passed to the job
-    $package = unserialize($job->workload());
-
     // Close any database resource available before the process is forked
-    // Issue "MySQL server has gone away"
+    // to solve the issue "MySQL server has gone away"
     Propel::close();
 
     // Fork process
