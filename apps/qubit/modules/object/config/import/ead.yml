@@ -389,6 +389,11 @@ information_object:
       Method: importEadNote
       Parameters: ["$options = array('note' => $nodeValue, 'noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID)"]
 
+    archivists_notes:
+      XPath:  "(../eadheader/filedesc/titlestmt/author[@encodinganalog='Creator'])"
+      Method: importEadNote
+      Parameters: ["$options = array('note' => $nodeValue, 'noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID)"]
+
     revision_history:
       XPath:  "(processinfo/p/date | descgrp/processinfo/p/date)"
       Method:  setRevisionHistory
