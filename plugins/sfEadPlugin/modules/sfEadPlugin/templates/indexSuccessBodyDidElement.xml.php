@@ -41,6 +41,7 @@
     <?php if (0 < strlen($value = $$resourceVar->getPropertyByName('editionStatementOfResponsibility')->__toString())): ?>
     <unittitle type="statrep"><edition><?php echo escape_dc(esc_specialchars($value)) ?></edition></unittitle>
     <?php endif; ?>
+    <?php $repository = null; ?>
     <?php if (0 < strlen($$resourceVar->getIdentifier())): ?>
     <?php foreach ($$resourceVar->ancestors->andSelf()->orderBy('rgt') as $item): ?>
     <?php if (isset($item->repository)): ?>
@@ -98,10 +99,11 @@
     </repository>
     <?php endif; ?>
     <?php if (0 < count($langmaterial = $$resourceVar->language)): ?>
-    <langmaterial encodinganalog="3.4.3">
+      <langmaterial encodinganalog="3.4.3">
       <?php foreach ($langmaterial as $languageCode): ?>
-      <language langcode="<?php echo ($iso6392 = $iso639convertor->getID3($languageCode)) ? strtolower($iso6392) : $languageCode ?>"><?php echo format_language($languageCode) ?></language><?php endforeach; ?>
-    </langmaterial>
+        <language langcode="<?php echo ($iso6392 = $iso639convertor->getID3($languageCode)) ? strtolower($iso6392) : $languageCode ?>"><?php echo format_language($languageCode) ?></language>
+      <?php endforeach; ?>
+      </langmaterial>
     <?php endif; ?>
     <?php if ($$resourceVar->sources): ?>
     <note type="sourcesDescription"><p><?php echo escape_dc(esc_specialchars($$resourceVar->sources)) ?></p></note>
